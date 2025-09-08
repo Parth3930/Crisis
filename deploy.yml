@@ -1,0 +1,39 @@
+# Akash SDL for Crisis Navigator
+version: "2.0"
+services:
+  web:
+    image: ghcr.io/${GITHUB_ACTOR,,}/crisis:${GITHUB_SHA}
+    command: python app.py
+    env:
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - SESSION_SECRET=${SESSION_SECRET}
+      - TWILIO_ACCOUNT_SID=${TWILIO_ACCOUNT_SID}
+      - TWILIO_AUTH_TOKEN=${TWILIO_AUTH_TOKEN}
+      - TWILIO_PHONE_NUMBER=${TWILIO_PHONE_NUMBER}
+      - SLACK_BOT_TOKEN=${SLACK_BOT_TOKEN}
+      - SLACK_CHANNEL_ID=${SLACK_CHANNEL_ID}
+    expose:
+      - port: 5000
+        as: 80
+        to:
+          - global
+    resources:
+      cpu:
+        units: 1
+      memory:
+        size: 2Gi
+      gpu:
+        units: 1
+profiles:
+  web:
+    resources:
+      cpu:
+        units: 1
+      memory:
+        size: 2Gi
+      gpu:
+        units: 1
+deployment:
+  web:
+    profile: web
+    count: 1
