@@ -37,7 +37,7 @@ endblock %} {% block head %}
       <div class="alert alert-danger d-flex align-items-center mb-4">
         <i class="fas fa-exclamation-triangle fs-4 me-3"></i>
         <div>
-          <strong>Life-Threatening Emergency?</strong> Call 911 immediately. Use
+          <strong>Life-Threatening Emergency?</strong> Call 100 immediately. Use
           this form to provide additional details and coordinate support.
         </div>
       </div>
@@ -55,14 +55,8 @@ endblock %} {% block head %}
               <label for="title" class="form-label fw-bold">
                 <i class="fas fa-heading me-1"></i>Emergency Title
               </label>
-              <input
-                type="text"
-                class="form-control"
-                id="title"
-                name="title"
-                placeholder="Brief description (e.g., Building Fire, Car Accident)"
-                required
-              />
+              <input type="text" class="form-control" id="title" name="title"
+                placeholder="Brief description (e.g., Building Fire, Car Accident)" required />
             </div>
 
             <!-- Description -->
@@ -70,14 +64,9 @@ endblock %} {% block head %}
               <label for="description" class="form-label fw-bold">
                 <i class="fas fa-file-alt me-1"></i>Detailed Description
               </label>
-              <textarea
-                class="form-control"
-                id="description"
-                name="description"
-                rows="5"
+              <textarea class="form-control" id="description" name="description" rows="5"
                 placeholder="Provide detailed information about the emergency situation, injuries, hazards, and immediate needs..."
-                required
-              ></textarea>
+                required></textarea>
               <div class="form-text">
                 Include as much detail as possible. This information will be
                 analyzed by AI to determine response priorities.
@@ -91,23 +80,14 @@ endblock %} {% block head %}
                   <label for="location" class="form-label fw-bold">
                     <i class="fas fa-map-marker-alt me-1"></i>Location
                   </label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="location"
-                    name="location"
-                    placeholder="Address or landmark"
-                  />
+                  <input type="text" class="form-control" id="location" name="location"
+                    placeholder="Address or landmark" />
                 </div>
               </div>
               <div class="col-md-4">
                 <div class="mb-3">
                   <label class="form-label fw-bold">GPS Coordinates</label>
-                  <button
-                    type="button"
-                    class="btn btn-outline-info w-100"
-                    onclick="getCurrentLocation()"
-                  >
+                  <button type="button" class="btn btn-outline-info w-100" onclick="getCurrentLocation()">
                     <i class="fas fa-crosshairs me-2"></i>Get Current Location
                   </button>
                 </div>
@@ -123,14 +103,7 @@ endblock %} {% block head %}
               <label for="image" class="form-label fw-bold">
                 <i class="fas fa-camera me-1"></i>Emergency Photo (Optional)
               </label>
-              <input
-                type="file"
-                class="form-control"
-                id="image"
-                name="image"
-                accept="image/*"
-                capture="environment"
-              />
+              <input type="file" class="form-control" id="image" name="image" accept="image/*" capture="environment" />
               <div class="form-text">
                 Upload a photo of the emergency situation. AI will analyze the
                 image to provide additional insights.
@@ -169,23 +142,17 @@ endblock %} {% block head %}
           <div class="row text-center">
             <div class="col-md-4">
               <a href="tel:911" class="btn btn-danger w-100 mb-2">
-                <i class="fas fa-phone me-2"></i>911 <br /><small
-                  >Emergency Services</small
-                >
+                <i class="fas fa-phone me-2"></i>911 <br /><small>Emergency Services</small>
               </a>
             </div>
             <div class="col-md-4">
               <a href="tel:211" class="btn btn-info w-100 mb-2">
-                <i class="fas fa-info-circle me-2"></i>211 <br /><small
-                  >Community Services</small
-                >
+                <i class="fas fa-info-circle me-2"></i>211 <br /><small>Community Services</small>
               </a>
             </div>
             <div class="col-md-4">
               <a href="tel:311" class="btn btn-warning w-100 mb-2">
-                <i class="fas fa-city me-2"></i>311 <br /><small
-                  >City Services</small
-                >
+                <i class="fas fa-city me-2"></i>311 <br /><small>City Services</small>
               </a>
             </div>
           </div>
@@ -194,17 +161,17 @@ endblock %} {% block head %}
 
       <!-- Help Text -->
       <div class="mt-4 p-3 bg-white rounded shadow border text-dark">
-  <h6 class="fw-bold mb-3 d-flex align-items-center">
-    <i class="fas fa-eye me-2 text-success"></i>Reporting Guidelines
-  </h6>
-  <ul class="mb-0 ps-3">
-    <li>Be specific and accurate in your description</li>
-    <li>Include location details and nearby landmarks</li>
-    <li>Note any injuries or immediate dangers</li>
-    <li>Mention resources needed (medical, fire, police)</li>
-    <li>Upload clear photos if safe to do so</li>
-  </ul>
-</div>
+        <h6 class="fw-bold mb-3 d-flex align-items-center">
+          <i class="fas fa-eye me-2 text-success"></i>Reporting Guidelines
+        </h6>
+        <ul class="mb-0 ps-3">
+          <li>Be specific and accurate in your description</li>
+          <li>Include location details and nearby landmarks</li>
+          <li>Note any injuries or immediate dangers</li>
+          <li>Mention resources needed (medical, fire, police)</li>
+          <li>Upload clear photos if safe to do so</li>
+        </ul>
+      </div>
     </div>
   </div>
 </div>

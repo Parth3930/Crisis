@@ -13,24 +13,25 @@
                     AI-Powered Emergency Response
                 </h1>
                 <p class="lead text-light mb-4">
-                    Advanced crisis management platform that uses artificial intelligence to analyze emergency situations, 
+                    Advanced crisis management platform that uses artificial intelligence to analyze emergency
+                    situations,
                     coordinate rescue operations, and provide real-time assistance to those in need.
                 </p>
                 <div class="d-flex flex-wrap gap-3">
                     {% if not session.user_id %}
-                        <a href="{{ url_for('register') }}" class="btn btn-danger btn-lg">
-                            <i class="fas fa-user-plus me-2"></i>Get Started
-                        </a>
-                        <a href="{{ url_for('login') }}" class="btn btn-outline-light btn-lg">
-                            <i class="fas fa-sign-in-alt me-2"></i>Login
-                        </a>
+                    <a href="{{ url_for('register') }}" class="btn btn-danger btn-lg">
+                        <i class="fas fa-user-plus me-2"></i>Get Started
+                    </a>
+                    <a href="{{ url_for('login') }}" class="btn btn-outline-light btn-lg">
+                        <i class="fas fa-sign-in-alt me-2"></i>Login
+                    </a>
                     {% else %}
-                        <a href="{{ url_for('dashboard') }}" class="btn btn-danger btn-lg">
-                            <i class="fas fa-tachometer-alt me-2"></i>Go to Dashboard
-                        </a>
-                        <a href="{{ url_for('report') }}" class="btn btn-warning btn-lg">
-                            <i class="fas fa-exclamation-triangle me-2"></i>Report Emergency
-                        </a>
+                    <a href="{{ url_for('dashboard') }}" class="btn btn-danger btn-lg">
+                        <i class="fas fa-tachometer-alt me-2"></i>Go to Dashboard
+                    </a>
+                    <a href="{{ url_for('report') }}" class="btn btn-warning btn-lg">
+                        <i class="fas fa-exclamation-triangle me-2"></i>Report Emergency
+                    </a>
                     {% endif %}
                 </div>
             </div>
@@ -55,26 +56,29 @@
                 <p class="lead text-muted">Comprehensive emergency response capabilities powered by AI</p>
             </div>
         </div>
-        
+
         <div class="row g-4">
             <div class="col-md-6 col-lg-3">
                 <div class="card h-100 border-0 shadow-sm">
                     <div class="card-body text-center p-4">
-                        <div class="bg-danger bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 64px; height: 64px;">
+                        <div class="bg-danger bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
+                            style="width: 64px; height: 64px;">
                             <i class="fas fa-brain text-danger fs-3"></i>
                         </div>
                         <h5 class="card-title">AI Analysis</h5>
                         <p class="card-text text-muted">
-                            Advanced AI analyzes emergency reports to determine severity, category, and response recommendations.
+                            Advanced AI analyzes emergency reports to determine severity, category, and response
+                            recommendations.
                         </p>
                     </div>
                 </div>
             </div>
-            
+
             <div class="col-md-6 col-lg-3">
                 <div class="card h-100 border-0 shadow-sm">
                     <div class="card-body text-center p-4">
-                        <div class="bg-warning bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 64px; height: 64px;">
+                        <div class="bg-warning bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
+                            style="width: 64px; height: 64px;">
                             <i class="fas fa-exclamation-triangle text-warning fs-3"></i>
                         </div>
                         <h5 class="card-title">Emergency Reports</h5>
@@ -84,11 +88,12 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="col-md-6 col-lg-3">
                 <div class="card h-100 border-0 shadow-sm">
                     <div class="card-body text-center p-4">
-                        <div class="bg-success bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 64px; height: 64px;">
+                        <div class="bg-success bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
+                            style="width: 64px; height: 64px;">
                             <i class="fas fa-map-marked-alt text-success fs-3"></i>
                         </div>
                         <h5 class="card-title">Interactive Maps</h5>
@@ -98,16 +103,18 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="col-md-6 col-lg-3">
                 <div class="card h-100 border-0 shadow-sm">
                     <div class="card-body text-center p-4">
-                        <div class="bg-info bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 64px; height: 64px;">
+                        <div class="bg-info bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
+                            style="width: 64px; height: 64px;">
                             <i class="fas fa-tachometer-alt text-info fs-3"></i>
                         </div>
                         <h5 class="card-title">Real-time Dashboard</h5>
                         <p class="card-text text-muted">
-                            Monitor alerts, track rescue status, and coordinate response efforts from a central dashboard.
+                            Monitor alerts, track rescue status, and coordinate response efforts from a central
+                            dashboard.
                         </p>
                     </div>
                 </div>
@@ -125,18 +132,19 @@
                     <i class="fas fa-phone-alt me-2"></i>Emergency Situation?
                 </h3>
                 <p class="mb-0 lead">
-                    If you're in immediate danger, call emergency services first. Use Crisis Navigator to coordinate additional support and resources.
+                    If you're in immediate danger, call emergency services first. Use Crisis Navigator to coordinate
+                    additional support and resources.
                 </p>
             </div>
             <div class="col-lg-4 text-lg-end">
                 <div class="d-flex flex-column gap-2">
                     <a href="tel:911" class="btn btn-danger btn-lg">
-                        <i class="fas fa-phone me-2"></i>Call 911
+                        <i class="fas fa-phone me-2"></i>Call 100
                     </a>
                     {% if session.user_id %}
-                        <a href="{{ url_for('report') }}" class="btn btn-outline-danger">
-                            <i class="fas fa-plus me-2"></i>Submit Report
-                        </a>
+                    <a href="{{ url_for('report') }}" class="btn btn-outline-danger">
+                        <i class="fas fa-plus me-2"></i>Submit Report
+                    </a>
                     {% endif %}
                 </div>
             </div>

@@ -11,7 +11,7 @@
         color: white;
         text-align: center;
     }
-    
+
     .mic-button {
         width: 120px;
         height: 120px;
@@ -23,30 +23,38 @@
         margin: 20px auto;
         cursor: pointer;
         transition: all 0.3s ease;
-        box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
     }
-    
+
     .mic-button:hover {
         transform: scale(1.1);
-        box-shadow: 0 12px 35px rgba(0,0,0,0.4);
+        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
     }
-    
+
     .mic-button.recording {
         background: linear-gradient(45deg, #e74c3c, #c0392b);
         animation: pulse 2s infinite;
     }
-    
+
     @keyframes pulse {
-        0% { transform: scale(1); }
-        50% { transform: scale(1.05); }
-        100% { transform: scale(1); }
+        0% {
+            transform: scale(1);
+        }
+
+        50% {
+            transform: scale(1.05);
+        }
+
+        100% {
+            transform: scale(1);
+        }
     }
-    
+
     .status-indicator {
         font-size: 1.1rem;
         margin: 15px 0;
     }
-    
+
     .transcript-box {
         background: rgba(255, 255, 255, 0.1);
         border: 1px solid rgba(255, 255, 255, 0.3);
@@ -56,7 +64,7 @@
         min-height: 100px;
         backdrop-filter: blur(10px);
     }
-    
+
     .language-selector {
         background: #3c445c;
         border: 1px solid rgba(255, 255, 255, 0.3);
@@ -75,7 +83,7 @@
             <div class="alert alert-danger d-flex align-items-center">
                 <i class="fas fa-exclamation-triangle fs-4 me-3"></i>
                 <div>
-                    <strong>Life-Threatening Emergency?</strong> Call 911 immediately. 
+                    <strong>Life-Threatening Emergency?</strong> Call 100 immediately.
                     Use voice reporting for additional details and coordination.
                 </div>
             </div>
@@ -88,7 +96,7 @@
                 <h3 class="mb-4">
                     <i class="fas fa-microphone me-2"></i>Voice Emergency Report
                 </h3>
-                
+
                 <!-- Language Selector -->
                 <div class="mb-3">
                     <label class="form-label">Choose your language:</label>
@@ -112,7 +120,7 @@
                     <button id="micButton" class="mic-button" onclick="toggleRecording()">
                         <i class="fas fa-microphone" id="micIcon"></i>
                     </button>
-                    
+
                     <div id="statusIndicator" class="status-indicator">
                         🎤 Click to start speaking
                     </div>
@@ -142,19 +150,20 @@
                     <form id="voiceReportForm" method="POST" action="{{ url_for('report') }}">
                         <div class="mb-3">
                             <label for="title" class="form-label fw-bold">Emergency Title</label>
-                            <input type="text" class="form-control" id="title" name="title" placeholder="Brief description" required>
+                            <input type="text" class="form-control" id="title" name="title"
+                                placeholder="Brief description" required>
                         </div>
 
                         <div class="mb-3">
                             <label for="description" class="form-label fw-bold">Description</label>
-                            <textarea class="form-control" id="description" name="description" rows="5" 
-                                      placeholder="Detailed description from voice input..." required></textarea>
+                            <textarea class="form-control" id="description" name="description" rows="5"
+                                placeholder="Detailed description from voice input..." required></textarea>
                         </div>
 
                         <div class="mb-3">
                             <label for="location" class="form-label fw-bold">Location</label>
-                            <input type="text" class="form-control" id="location" name="location" 
-                                   placeholder="Address or landmark">
+                            <input type="text" class="form-control" id="location" name="location"
+                                placeholder="Address or landmark">
                             <button type="button" class="btn btn-outline-info mt-2" onclick="getLocation()">
                                 <i class="fas fa-crosshairs me-2"></i>Get GPS Location
                             </button>
@@ -197,8 +206,8 @@
                         <div class="col-md-6">
                             <h6>Sample Voice Report:</h6>
                             <div class="alert alert-light small">
-                                "Emergency at 123 Main Street. Building fire on second floor. 
-                                Three people trapped. Heavy smoke visible. 
+                                "Emergency at 123 Main Street. Building fire on second floor.
+                                Three people trapped. Heavy smoke visible.
                                 Need fire department and ambulance immediately."
                             </div>
                         </div>
@@ -212,158 +221,158 @@
 
 {% block scripts %}
 <script>
-let recognition;
-let isRecording = false;
-let currentLanguage = 'en-US';
+    let recognition;
+    let isRecording = false;
+    let currentLanguage = 'en-US';
 
-// Check for speech recognition support
-if ('webkitSpeechRecognition' in window) {
-    recognition = new webkitSpeechRecognition();
-} else if ('SpeechRecognition' in window) {
-    recognition = new SpeechRecognition();
-} else {
-    document.getElementById('statusIndicator').textContent = '❌ Speech recognition not supported in this browser';
-    document.getElementById('micButton').disabled = true;
-}
+    // Check for speech recognition support
+    if ('webkitSpeechRecognition' in window) {
+        recognition = new webkitSpeechRecognition();
+    } else if ('SpeechRecognition' in window) {
+        recognition = new SpeechRecognition();
+    } else {
+        document.getElementById('statusIndicator').textContent = '❌ Speech recognition not supported in this browser';
+        document.getElementById('micButton').disabled = true;
+    }
 
-if (recognition) {
-    recognition.continuous = true;
-    recognition.interimResults = true;
-    recognition.lang = currentLanguage;
+    if (recognition) {
+        recognition.continuous = true;
+        recognition.interimResults = true;
+        recognition.lang = currentLanguage;
 
-    recognition.onstart = function() {
-        isRecording = true;
-        updateRecordingState();
-    };
+        recognition.onstart = function () {
+            isRecording = true;
+            updateRecordingState();
+        };
 
-    recognition.onresult = function(event) {
-        let finalTranscript = '';
-        let interimTranscript = '';
+        recognition.onresult = function (event) {
+            let finalTranscript = '';
+            let interimTranscript = '';
 
-        for (let i = event.resultIndex; i < event.results.length; i++) {
-            const transcript = event.results[i][0].transcript;
-            if (event.results[i].isFinal) {
-                finalTranscript += transcript;
-            } else {
-                interimTranscript += transcript;
+            for (let i = event.resultIndex; i < event.results.length; i++) {
+                const transcript = event.results[i][0].transcript;
+                if (event.results[i].isFinal) {
+                    finalTranscript += transcript;
+                } else {
+                    interimTranscript += transcript;
+                }
             }
-        }
 
-        document.getElementById('transcript').textContent = finalTranscript + interimTranscript;
-        
-        // Update form description with transcript
-        if (finalTranscript) {
-            document.getElementById('description').value = finalTranscript;
-            
-            // Translate if not English
-            if (currentLanguage !== 'en-US') {
-                translateText(finalTranscript);
+            document.getElementById('transcript').textContent = finalTranscript + interimTranscript;
+
+            // Update form description with transcript
+            if (finalTranscript) {
+                document.getElementById('description').value = finalTranscript;
+
+                // Translate if not English
+                if (currentLanguage !== 'en-US') {
+                    translateText(finalTranscript);
+                }
             }
+        };
+
+        recognition.onerror = function (event) {
+            console.error('Speech recognition error:', event.error);
+            document.getElementById('statusIndicator').textContent = '❌ Error: ' + event.error;
+            stopRecording();
+        };
+
+        recognition.onend = function () {
+            isRecording = false;
+            updateRecordingState();
+        };
+    }
+
+    function toggleRecording() {
+        if (isRecording) {
+            stopRecording();
+        } else {
+            startRecording();
         }
-    };
+    }
 
-    recognition.onerror = function(event) {
-        console.error('Speech recognition error:', event.error);
-        document.getElementById('statusIndicator').textContent = '❌ Error: ' + event.error;
-        stopRecording();
-    };
+    function startRecording() {
+        currentLanguage = document.getElementById('languageSelect').value;
+        recognition.lang = currentLanguage;
+        recognition.start();
+        document.getElementById('statusIndicator').textContent = '🎤 Listening... Speak now';
+    }
 
-    recognition.onend = function() {
+    function stopRecording() {
+        if (recognition && isRecording) {
+            recognition.stop();
+        }
         isRecording = false;
         updateRecordingState();
-    };
-}
-
-function toggleRecording() {
-    if (isRecording) {
-        stopRecording();
-    } else {
-        startRecording();
     }
-}
 
-function startRecording() {
-    currentLanguage = document.getElementById('languageSelect').value;
-    recognition.lang = currentLanguage;
-    recognition.start();
-    document.getElementById('statusIndicator').textContent = '🎤 Listening... Speak now';
-}
+    function updateRecordingState() {
+        const micButton = document.getElementById('micButton');
+        const micIcon = document.getElementById('micIcon');
+        const statusIndicator = document.getElementById('statusIndicator');
 
-function stopRecording() {
-    if (recognition && isRecording) {
-        recognition.stop();
-    }
-    isRecording = false;
-    updateRecordingState();
-}
-
-function updateRecordingState() {
-    const micButton = document.getElementById('micButton');
-    const micIcon = document.getElementById('micIcon');
-    const statusIndicator = document.getElementById('statusIndicator');
-
-    if (isRecording) {
-        micButton.classList.add('recording');
-        micIcon.className = 'fas fa-stop';
-        statusIndicator.textContent = '🔴 Recording... Click to stop';
-    } else {
-        micButton.classList.remove('recording');
-        micIcon.className = 'fas fa-microphone';
-        statusIndicator.textContent = '🎤 Click to start speaking';
-    }
-}
-
-async function translateText(text) {
-    if (currentLanguage === 'en-US') return;
-    
-    try {
-        const response = await fetch('/api/translate', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                text: text,
-                target_language: 'en'
-            })
-        });
-
-        const data = await response.json();
-        if (data.translated_text) {
-            document.getElementById('translation').textContent = data.translated_text;
-            document.getElementById('translationBox').style.display = 'block';
-            
-            // Also update form with translated text
-            document.getElementById('description').value = data.translated_text;
+        if (isRecording) {
+            micButton.classList.add('recording');
+            micIcon.className = 'fas fa-stop';
+            statusIndicator.textContent = '🔴 Recording... Click to stop';
+        } else {
+            micButton.classList.remove('recording');
+            micIcon.className = 'fas fa-microphone';
+            statusIndicator.textContent = '🎤 Click to start speaking';
         }
-    } catch (error) {
-        console.error('Translation error:', error);
     }
-}
 
-function getLocation() {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-            document.getElementById('latitude').value = position.coords.latitude;
-            document.getElementById('longitude').value = position.coords.longitude;
-            document.getElementById('location').value = 
-                position.coords.latitude.toFixed(6) + ', ' + position.coords.longitude.toFixed(6);
-        });
+    async function translateText(text) {
+        if (currentLanguage === 'en-US') return;
+
+        try {
+            const response = await fetch('/api/translate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    text: text,
+                    target_language: 'en'
+                })
+            });
+
+            const data = await response.json();
+            if (data.translated_text) {
+                document.getElementById('translation').textContent = data.translated_text;
+                document.getElementById('translationBox').style.display = 'block';
+
+                // Also update form with translated text
+                document.getElementById('description').value = data.translated_text;
+            }
+        } catch (error) {
+            console.error('Translation error:', error);
+        }
     }
-}
 
-function clearForm() {
-    document.getElementById('voiceReportForm').reset();
-    document.getElementById('transcript').textContent = 'Your speech will appear here...';
-    document.getElementById('translationBox').style.display = 'none';
-}
-
-// Language change handler
-document.getElementById('languageSelect').addEventListener('change', function() {
-    currentLanguage = this.value;
-    if (isRecording) {
-        stopRecording();
+    function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                document.getElementById('latitude').value = position.coords.latitude;
+                document.getElementById('longitude').value = position.coords.longitude;
+                document.getElementById('location').value =
+                    position.coords.latitude.toFixed(6) + ', ' + position.coords.longitude.toFixed(6);
+            });
+        }
     }
-});
+
+    function clearForm() {
+        document.getElementById('voiceReportForm').reset();
+        document.getElementById('transcript').textContent = 'Your speech will appear here...';
+        document.getElementById('translationBox').style.display = 'none';
+    }
+
+    // Language change handler
+    document.getElementById('languageSelect').addEventListener('change', function () {
+        currentLanguage = this.value;
+        if (isRecording) {
+            stopRecording();
+        }
+    });
 </script>
 {% endblock %}
