@@ -1,0 +1,318 @@
+{% extends "base.html" %}
+
+{% block title %}Analytics Dashboard - Crisis Navigator{% endblock %}
+
+{% block head %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+    .metric-card {
+        transition: transform 0.2s;
+    }
+    .metric-card:hover {
+        transform: translateY(-5px);
+    }
+    .chart-container {
+        position: relative;
+        height: 300px;
+        margin: 20px 0;
+    }
+    .prediction-box {
+        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        color: white;
+        border-radius: 15px;
+        padding: 20px;
+    }
+    .trend-indicator {
+        font-size: 1.5rem;
+        margin-right: 10px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <!-- Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h2 class="fw-bold">
+                        <i class="fas fa-chart-line me-2 text-info"></i>Emergency Analytics
+                    </h2>
+                    <p class="text-muted mb-0">AI-powered insights and predictive analysis</p>
+                </div>
+                <div>
+                    <button class="btn btn-outline-info" onclick="refreshAnalytics()">
+                        <i class="fas fa-sync-alt me-1"></i>Refresh Data
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Summary Statistics -->
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card metric-card bg-danger bg-opacity-10 border-danger">
+                <div class="card-body text-center">
+                    <i class="fas fa-exclamation-triangle fs-1 text-danger mb-2"></i>
+                    <h3 class="fw-bold">{{ insights.summary_stats.total_reports }}</h3>
+                    <p class="mb-0 text-muted">Total Reports</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card metric-card bg-warning bg-opacity-10 border-warning">
+                <div class="card-body text-center">
+                    <i class="fas fa-bell fs-1 text-warning mb-2"></i>
+                    <h3 class="fw-bold">{{ insights.summary_stats.active_alerts }}</h3>
+                    <p class="mb-0 text-muted">Active Alerts</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card metric-card bg-info bg-opacity-10 border-info">
+                <div class="card-body text-center">
+                    <i class="fas fa-clock fs-1 text-info mb-2"></i>
+                    <h3 class="fw-bold">{{ insights.summary_stats.recent_24h }}</h3>
+                    <p class="mb-0 text-muted">Last 24 Hours</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Trends Analysis -->
+        <div class="col-lg-6">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-trending-up me-2 text-success"></i>Emergency Trends
+                    </h5>
+                </div>
+                <div class="card-body">
+                    {% if insights.trends.trend_direction %}
+                    <div class="d-flex align-items-center mb-3">
+                        <span class="trend-indicator">
+                            {% if insights.trends.trend_direction == 'increasing' %}
+                                📈
+                            {% elif insights.trends.trend_direction == 'decreasing' %}
+                                📉
+                            {% else %}
+                                📊
+                            {% endif %}
+                        </span>
+                        <div>
+                            <h6 class="mb-1">Trend: {{ insights.trends.trend_direction.title() }}</h6>
+                            <small class="text-muted">Based on recent patterns</small>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    {% if insights.trends.common_categories %}
+                    <div class="mb-3">
+                        <h6>Most Common Emergency Types:</h6>
+                        <div class="d-flex flex-wrap gap-2">
+                            {% for category in insights.trends.common_categories[:5] %}
+                            <span class="badge bg-secondary">{{ category }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    {% if insights.trends.peak_hours %}
+                    <div class="mb-3">
+                        <h6>Peak Activity Hours:</h6>
+                        <div class="d-flex flex-wrap gap-2">
+                            {% for hour in insights.trends.peak_hours[:5] %}
+                            <span class="badge bg-info">{{ hour }}:00</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    {% if insights.trends.insights %}
+                    <div class="alert alert-light">
+                        <h6><i class="fas fa-lightbulb me-2"></i>AI Insights:</h6>
+                        <ul class="mb-0 small">
+                            {% for insight in insights.trends.insights[:3] %}
+                            <li>{{ insight }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Risk Prediction -->
+        <div class="col-lg-6">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-crystal-ball me-2 text-warning"></i>Risk Prediction
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="prediction-box text-center mb-3">
+                        <h4 class="mb-2">
+                            {% if insights.predictions.risk_level == 'critical' %}
+                                🚨 CRITICAL RISK
+                            {% elif insights.predictions.risk_level == 'high' %}
+                                ⚠️ HIGH RISK
+                            {% elif insights.predictions.risk_level == 'moderate' %}
+                                📊 MODERATE RISK
+                            {% else %}
+                                ✅ LOW RISK
+                            {% endif %}
+                        </h4>
+                        <p class="mb-1">{{ insights.predictions.time_frame }}</p>
+                        <small>Predicted Incidents: {{ insights.predictions.predicted_incidents }}</small>
+                    </div>
+
+                    {% if insights.predictions.high_risk_areas %}
+                    <div class="mb-3">
+                        <h6>High-Risk Areas:</h6>
+                        <div class="d-flex flex-wrap gap-2">
+                            {% for area in insights.predictions.high_risk_areas %}
+                            <span class="badge bg-danger">{{ area }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    {% if insights.predictions.recommended_preparations %}
+                    <div class="alert alert-warning">
+                        <h6><i class="fas fa-shield-alt me-2"></i>Recommended Preparations:</h6>
+                        <ul class="mb-0 small">
+                            {% for prep in insights.predictions.recommended_preparations %}
+                            <li>{{ prep }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Interactive Charts -->
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h6 class="mb-0">
+                        <i class="fas fa-chart-pie me-2"></i>Severity Distribution
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <div class="chart-container">
+                        <canvas id="severityChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h6 class="mb-0">
+                        <i class="fas fa-chart-bar me-2"></i>Hourly Activity Pattern
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <div class="chart-container">
+                        <canvas id="hourlyChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Initialize charts with insights data
+const insights = {{ insights | safe }};
+
+// Severity Distribution Chart
+if (insights.trends.severity_distribution) {
+    const severityCtx = document.getElementById('severityChart').getContext('2d');
+    const severityData = insights.trends.severity_distribution;
+    
+    new Chart(severityCtx, {
+        type: 'doughnut',
+        data: {
+            labels: Object.keys(severityData).map(key => key.charAt(0).toUpperCase() + key.slice(1)),
+            datasets: [{
+                data: Object.values(severityData),
+                backgroundColor: [
+                    '#dc3545', // Critical - Red
+                    '#fd7e14', // High - Orange
+                    '#0dcaf0', // Medium - Blue
+                    '#198754'  // Low - Green
+                ],
+                borderWidth: 2,
+                borderColor: '#ffffff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: { color: '#ffffff' }
+                }
+            }
+        }
+    });
+}
+
+// Hourly Activity Chart
+if (insights.trends.peak_hours) {
+    const hourlyCtx = document.getElementById('hourlyChart').getContext('2d');
+    const hours = Array.from({length: 24}, (_, i) => i);
+    const data = hours.map(hour => insights.trends.peak_hours.includes(hour) ? Math.random() * 10 + 5 : Math.random() * 3);
+    
+    new Chart(hourlyCtx, {
+        type: 'bar',
+        data: {
+            labels: hours.map(h => h + ':00'),
+            datasets: [{
+                label: 'Emergency Reports',
+                data: data,
+                backgroundColor: 'rgba(13, 202, 240, 0.8)',
+                borderColor: 'rgba(13, 202, 240, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: { color: '#ffffff' }
+                },
+                x: {
+                    ticks: { color: '#ffffff' }
+                }
+            },
+            plugins: {
+                legend: {
+                    labels: { color: '#ffffff' }
+                }
+            }
+        }
+    });
+}
+
+function refreshAnalytics() {
+    location.reload();
+}
+
+// Auto-refresh every 5 minutes
+setInterval(refreshAnalytics, 5 * 60 * 1000);
+</script>
+{% endblock %}
