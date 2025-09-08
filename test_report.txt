@@ -1,0 +1,49 @@
+Emergency Report (Test File)
+
+Suggested Title:
+Multi-vehicle collision with fire near central bus terminal
+
+Detailed Description (copy this into the Description field):
+At approximately 14:25 local time, I witnessed a three-vehicle collision at the intersection near the Central Bus Terminal. One sedan caught fire in the engine bay with visible flames and heavy smoke. A small fuel spill is present on the roadway. Two occupants appear injured; one is semi-conscious with head trauma, and another has a possible leg fracture. A third person is walking but bleeding from the forearm.
+
+Immediate hazards include:
+- Active engine fire and dense smoke
+- Possible fuel leakage (petrol/gasoline odor)
+- Debris on the road causing secondary collision risk
+- Traffic congestion blocking access for emergency vehicles
+
+Immediate needs:
+- Fire suppression (1 fire engine with foam capability)
+- Medical support (2 ambulances + trauma kits)
+- Traffic control and road closure (police units)
+
+Actions taken:
+- Warned approaching vehicles to slow down
+- Kept safe distance (~50 meters upwind)
+- Advised bystanders not to move the injured unless fire spreads
+
+Additional context:
+- Wind is moderate; smoke drifting east across inbound lanes
+- No visible downed power lines
+- Nearby hydrant ~30 meters north side of intersection
+
+Suggested Severity: High
+Suggested Category: Accident (Vehicle) / Fire
+Suggested Urgency: Immediate
+
+Location (copy into the Location field):
+Central Bus Terminal, Main St & 5th Ave, Springfield
+
+GPS Coordinates (optional fields):
+Latitude: 37.774930
+Longitude: -122.419420
+
+Landmarks for responders:
+- Central Bus Terminal main gate on the southwest corner
+- Pharmacy “Green Cross” 20 meters west of the intersection
+
+Reporter Notes (optional):
+If safe, approach from the west side to avoid smoke and fuel spill on the eastbound lanes. Evacuation radius ~100 meters recommended until fire is controlled.
+
+Timestamp (local):
+2025-09-08 14:28

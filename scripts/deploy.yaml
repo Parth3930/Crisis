@@ -1,0 +1,49 @@
+version: "2.0"
+
+services:
+  web:
+    # Image will be injected by CI from GitHub Secrets/vars
+    image: ${IMAGE}
+
+    # Environment variables are referenced from CI-provided env (e.g., GitHub Secrets)
+    env:
+      - FLASK_ENV=production
+      - SESSION_SECRET=${SESSION_SECRET}
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - TWILIO_ACCOUNT_SID=${TWILIO_ACCOUNT_SID}
+      - TWILIO_AUTH_TOKEN=${TWILIO_AUTH_TOKEN}
+      - TWILIO_PHONE_NUMBER=${TWILIO_PHONE_NUMBER}
+      - SLACK_BOT_TOKEN=${SLACK_BOT_TOKEN}
+      - SLACK_CHANNEL_ID=${SLACK_CHANNEL_ID}
+
+    expose:
+      - port: 5000     # container port (Flask/Gunicorn)
+        as: 80         # public port
+        to:
+          - global: true
+
+profiles:
+  compute:
+    web:
+      resources:
+        cpu:
+          units: 0.5
+        memory:
+          size: 512Mi
+        storage:
+          size: 1Gi
+
+  placement:
+    dcloud:
+      attributes:
+        host: akash
+      pricing:
+        web:
+          denom: uakt
+          amount: 1000
+
+deployment:
+  web:
+    profile: web
+    count: 1
+    placement: dcloud
